@@ -120,14 +120,6 @@ svg.mapa { display: block; width: 100%; height: clamp(420px, 72vh, 720px); touch
 .estado.embreve { border-style: dashed; box-shadow: none; background: transparent; }
 .estado.embreve .faixa { background: transparent; color: var(--ink); border-bottom-style: dashed; }
 
-/* Início: no celular, texto, mapa e cards em sequência; no computador, mapa à esquerda. */
-@media (min-width: 900px) {
-  main.inicio { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px 28px; align-items: start; }
-  main.inicio > .brasil { grid-column: 1; grid-row: 1 / span 3; position: sticky; top: 16px; }
-  main.inicio > :not(.brasil) { grid-column: 2; }
-  main.inicio .estados { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
-}
-
 /* Mapa do Brasil (início) */
 .brasil { width: 100%; border: 3px solid var(--ink); border-radius: 22px; overflow: hidden; background: var(--white); box-shadow: 6px 6px 0 var(--ink); }
 .brasil-titulo { font: 400 22px/1 var(--display); margin: 0; padding-block: 6px; }
@@ -135,7 +127,8 @@ svg.mapa { display: block; width: 100%; height: clamp(420px, 72vh, 720px); touch
 .zoom .chip { width: 42px; height: 42px; padding: 0; display: grid; place-items: center; font: 400 22px/1 var(--display); box-shadow: 2px 2px 0 var(--ink); }
 .zoom .chip[hidden] { display: none; }
 .chip:disabled { opacity: .35; cursor: default; }
-.brasil-palco { position: relative; overflow: hidden; touch-action: pan-y; background: var(--mar); }
+/* No celular o quadro segue a proporção do desenho; no computador, a altura tem limite e o mapa fica mais largo. */
+.brasil-palco { position: relative; width: 100%; overflow: hidden; touch-action: pan-y; background: var(--mar); max-height: min(78vh, 720px); }
 .brasil-palco.ampliado { touch-action: none; cursor: grab; }
 .brasil-palco.arrastando { cursor: grabbing; }
 .brasil-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }

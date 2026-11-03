@@ -21,14 +21,26 @@ export function iniciarMapaBrasil(): void {
   const botao = (z: string) => raiz.querySelector<HTMLButtonElement>(`[data-zoom="${z}"]`)!;
   const [mais, menos, tudo] = [botao('mais'), botao('menos'), botao('tudo')];
 
-  let vb: Caixa = [0, 0, W, H];
+  // O quadro pode ser mais largo que o desenho (no computador). A vista "Brasil inteiro" cobre
+  // o desenho todo e completa a sobra com mar e continente, mantendo o Brasil no centro.
+  let k = H / W; // altura / largura do quadro
+  let inteira: Caixa = [0, 0, W, H];
+  function medirQuadro(): void {
+    k = (palco.clientHeight || 1) / (palco.clientWidth || 1);
+    inteira = k < H / W ? [(W - H / k) / 2, 0, H / k, H] : [0, (H - W * k) / 2, W, W * k];
+  }
+  medirQuadro();
+
+  let vb: Caixa = inteira;
   let animacao = 0;
   let arrastou = false;
+  const noInteiro = (w = vb[2]) => w >= inteira[2] * 0.999;
 
   function limitar([x, y, w]: Caixa): Caixa {
-    w = Math.min(W, Math.max(W / ZOOM_MAX, w));
-    const h = (w * H) / W;
-    return [Math.min(W - w, Math.max(0, x)), Math.min(H - h, Math.max(0, y)), w, h];
+    const [ix, iy, iw, ih] = inteira;
+    w = Math.min(iw, Math.max(iw / ZOOM_MAX, w));
+    const h = w * k;
+    return [Math.min(ix + iw - w, Math.max(ix, x)), Math.min(iy + ih - h, Math.max(iy, y)), w, h];
   }
 
   function aplicar(v: Caixa): void {
@@ -57,11 +69,11 @@ export function iniciarMapaBrasil(): void {
       li.style.top = `${Math.min(altura - mh, Math.max(mh, pos[1]))}px`;
       l.ponto.setAttribute('r', String(5 * s));
     });
-    const inteiro = w >= W * 0.999;
+    const inteiro = noInteiro(w);
     palco.classList.toggle('ampliado', !inteiro);
     tudo.hidden = inteiro;
     menos.disabled = inteiro;
-    mais.disabled = w <= (W / ZOOM_MAX) * 1.001;
+    mais.disabled = w <= (inteira[2] / ZOOM_MAX) * 1.001;
   }
 
   /** Ponto da tela em unidades do SVG. */
@@ -72,9 +84,9 @@ export function iniciarMapaBrasil(): void {
 
   /** Amplia (fator > 1) ou afasta mantendo o ponto [mx, my] do mapa parado na tela. */
   function ampliado(fator: number, mx: number, my: number, base: Caixa = vb): Caixa {
-    const w = Math.min(W, Math.max(W / ZOOM_MAX, base[2] / fator));
-    const k = w / base[2];
-    return [mx - (mx - base[0]) * k, my - (my - base[1]) * k, w, (w * H) / W];
+    const w = Math.min(inteira[2], Math.max(inteira[2] / ZOOM_MAX, base[2] / fator));
+    const r = w / base[2];
+    return [mx - (mx - base[0]) * r, my - (my - base[1]) * r, w, w * k];
   }
 
   function animarPara(destino: Caixa): void {
@@ -93,7 +105,7 @@ export function iniciarMapaBrasil(): void {
   const meio = (): [number, number] => [vb[0] + vb[2] / 2, vb[1] + vb[3] / 2];
   mais.addEventListener('click', () => animarPara(ampliado(2, ...meio())));
   menos.addEventListener('click', () => animarPara(ampliado(0.5, ...meio())));
-  tudo.addEventListener('click', () => animarPara([0, 0, W, H]));
+  tudo.addEventListener('click', () => animarPara(inteira));
 
   // Ctrl + roda (no trackpad, a pinça chega assim). A roda sozinha continua rolando a página.
   palco.addEventListener('wheel', (e) => {
@@ -106,7 +118,7 @@ export function iniciarMapaBrasil(): void {
   // Mouse: arrastar quando ampliado.
   let mouse: { x: number; y: number; base: Caixa } | null = null;
   palco.addEventListener('pointerdown', (e) => {
-    if (e.pointerType !== 'mouse' || e.button !== 0 || vb[2] >= W * 0.999) return;
+    if (e.pointerType !== 'mouse' || e.button !== 0 || noInteiro()) return;
     arrastou = false;
     mouse = { x: e.clientX, y: e.clientY, base: vb.slice() as Caixa };
   });
@@ -139,7 +151,7 @@ export function iniciarMapaBrasil(): void {
   palco.addEventListener('touchmove', (e) => {
     if (!toque) return;
     const dois = e.touches.length >= 2;
-    if (!dois && vb[2] >= W * 0.999) return;
+    if (!dois && noInteiro()) return;
     e.preventDefault();
     const a = e.touches[0], b = e.touches[1] ?? a;
     const cx = (a.clientX + b.clientX) / 2, cy = (a.clientY + b.clientY) / 2;
@@ -158,6 +170,13 @@ export function iniciarMapaBrasil(): void {
   }, true);
 
   let espera = 0;
-  window.addEventListener('resize', () => { clearTimeout(espera); espera = window.setTimeout(() => aplicar(vb), 80); });
+  window.addEventListener('resize', () => {
+    clearTimeout(espera);
+    espera = window.setTimeout(() => {
+      const estava = noInteiro(), [cx, cy] = meio();
+      medirQuadro();
+      aplicar(estava ? inteira : [cx - vb[2] / 2, cy - (vb[2] * k) / 2, vb[2], vb[2] * k]);
+    }, 80);
+  });
   aplicar(vb);
 }
