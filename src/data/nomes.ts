@@ -6,6 +6,7 @@ export const DESENHOS = [
   'ilha', 'morro', 'relogio', 'sertao', 'sobrado', 'trem',
   'porto', 'araucaria', 'ponte', 'mina', 'ruina', 'viaduto', 'duna', 'lagoa', 'cadeia',
   'arcos', 'palmeira', 'azulejo', 'barra', 'carreta', 'salamanca',
+  'tamarindo', 'cordel', 'vapor', 'cacau', 'coruja', 'estrada', 'cruz',
 ] as const;
 
 export const ENFEITES = ['barco', 'cacto', 'farol', 'pao', 'pinheiro', 'serra', 'sol'] as const;

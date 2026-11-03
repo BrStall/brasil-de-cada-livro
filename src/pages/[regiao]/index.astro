@@ -17,6 +17,8 @@ interface Props { regiao: Regiao }
 const { regiao } = Astro.props;
 const lugares = await lugaresDaRegiao(regiao.id);
 const primeiro = lugares[0];
+const de = primeiro?.data.ano;
+const ate = lugares[lugares.length - 1]?.data.ano;
 const R = regiao.data;
 ---
 <Base titulo={R.nome} descricao={`${R.descricao} ${lugares.length} lugares de clássicos em domínio público.`}>
@@ -29,7 +31,7 @@ const R = regiao.data;
       <article class="sheet" id="ficha" style={`--c:${PALETA[R.cor]};--ct:${corTexto(R.cor)}`}>
         <div class="head">
           <div>
-            <div class="num">{lugares.length} lugares · de {lugares[0]?.data.ano} a {lugares[lugares.length - 1]?.data.ano}</div>
+            <div class="num">{lugares.length} lugares · {de === ate ? `em ${de}` : `de ${de} a ${ate}`}</div>
             <h1>{R.nome}</h1>
           </div>
         </div>

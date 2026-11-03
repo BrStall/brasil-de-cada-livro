@@ -15,9 +15,9 @@ const cards = await Promise.all(
   }),
 );
 const emBreve = [
-  { nome: 'Paraíba', uf: 'PB', texto: 'O tamarindo do engenho Pau d’Arco, nos versos de Augusto dos Anjos.' },
-  { nome: 'Pará', uf: 'PA', texto: 'Os Contos Amazônicos de Inglês de Sousa, em Óbidos e no rio Amazonas.' },
-  { nome: 'Mato Grosso do Sul', uf: 'MS', texto: 'O sertão de Inocência, romance do Visconde de Taunay.' },
+  { nome: 'Goiás', uf: 'GO', texto: 'Os tropeiros e boiadeiros de Tropas e Boiadas, de Hugo de Carvalho Ramos.' },
+  { nome: 'Amazonas', uf: 'AM', texto: 'Silves, a vila de O Missionário, romance de Inglês de Sousa.' },
+  { nome: 'Santa Catarina', uf: 'SC', texto: 'O Desterro de Cruz e Sousa, poeta nascido na ilha.' },
 ];
 const noMapa = cards.map(({ r, lugares }) => ({
   uf: r.data.uf,
@@ -46,7 +46,7 @@ const noMapa = cards.map(({ r, lugares }) => ({
           </div>
           <div class="txt">
             <p>{r.data.descricao}</p>
-            <span class="meta">{lugares.length} lugares · de {de} a {ate}</span>
+            <span class="meta">{lugares.length} lugares · {de === ate ? `em ${de}` : `de ${de} a ${ate}`}</span>
           </div>
         </a>
       ))}
