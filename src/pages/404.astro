@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import Topo from '../components/Topo.astro';
+---
+<Base titulo="Página não encontrada">
+  <Topo compacto />
+  <main class="inner pad">
+    <section class="secao">
+      <h1 class="marca" style="color:var(--ink);text-shadow:none">Esse lugar não está no mapa</h1>
+      <p>O endereço pode ter mudado. Volte para o início e escolha um estado.</p>
+      <p><a class="btn main" href="/">Ir para o início</a></p>
+    </section>
+  </main>
+</Base>

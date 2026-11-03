@@ -1,0 +1,50 @@
+---
+import { render } from 'astro:content';
+import type { Lugar } from '../types';
+import Desenho from './Desenho.astro';
+import { hrefDoLugar } from '../lib/conteudo';
+import { PALETA, corTexto } from '../data/paleta';
+
+interface Props {
+  lugar: Lugar;
+  n: number;
+  anterior?: Lugar;
+  proximo?: Lugar;
+}
+const { lugar, n, anterior, proximo } = Astro.props;
+const d = lugar.data;
+const temExtra = Boolean(lugar.body?.replace(/<!--[\s\S]*?-->/g, '').trim());
+const { Content } = await render(lugar);
+const leitura = `https://pt.wikisource.org/w/index.php?search=${encodeURIComponent(`${d.livro} ${d.autor}`)}`;
+const mapaReal = `https://www.openstreetmap.org/?mlat=${d.coordenadas.lat}&mlon=${d.coordenadas.lon}#map=17/${d.coordenadas.lat}/${d.coordenadas.lon}`;
+---
+<article class="sheet" id="ficha" style={`--c:${PALETA[d.cor]};--ct:${corTexto(d.cor)}`}>
+  <div class="head">
+    <div>
+      <div class="num">Lugar {n} · {d.ano}</div>
+      <h1>{d.lugar}</h1>
+      <p class="by"><i>{d.livro}</i>, {d.autor}</p>
+    </div>
+    <div class="art"><Desenho nome={d.desenho} /></div>
+  </div>
+  <div class="body">
+    <div class="where">{d.onde}{d.aproximado && <span class="aprox">local aproximado</span>}</div>
+    <blockquote class:list={['quote', { poem: d.poema }]}>{d.trecho}</blockquote>
+    <p class="note">{d.notaTrecho}</p>
+    <div class="tn">
+      <div class="then"><h2>Então</h2><p>{d.entao}</p></div>
+      <div class="now"><h2>Hoje</h2><p>{d.hoje}</p></div>
+    </div>
+    <div class="ask"><h2>Para conversar em sala</h2><p>{d.pergunta}</p></div>
+    {temExtra && <div class="extra"><Content /></div>}
+    <div class="links">
+      <a class="btn main" href={leitura} target="_blank" rel="noopener">Ler a obra completa ↗</a>
+      <a class="btn" href={mapaReal} target="_blank" rel="noopener">Ver no mapa real ↗</a>
+    </div>
+    <div class="vizinhos">
+      {anterior ? <a href={hrefDoLugar(anterior)}>← {anterior.data.lugar}</a> : <span></span>}
+      {proximo && <a href={hrefDoLugar(proximo)}>{proximo.data.lugar} →</a>}
+    </div>
+    <a class="back" href="#mapa">↑ Voltar ao mapa</a>
+  </div>
+</article>

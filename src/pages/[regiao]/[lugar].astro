@@ -1,0 +1,38 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Topo from '../../components/Topo.astro';
+import NavRegioes from '../../components/NavRegioes.astro';
+import Trilha from '../../components/Trilha.astro';
+import Mapa from '../../components/Mapa.astro';
+import Ficha from '../../components/Ficha.astro';
+import { lugaresDaRegiao, partesDoId } from '../../lib/conteudo';
+import type { Lugar } from '../../types';
+
+export async function getStaticPaths() {
+  const lugares = await getCollection('lugares');
+  return lugares.map((lugar) => {
+    const { regiao, slug } = partesDoId(lugar);
+    return { params: { regiao, lugar: slug }, props: { lugar } };
+  });
+}
+
+interface Props { lugar: Lugar }
+const { lugar } = Astro.props;
+const regiao = await getEntry(lugar.data.regiao);
+if (!regiao) throw new Error(`Região "${lugar.data.regiao.id}" não encontrada para ${lugar.id}`);
+const lugares = await lugaresDaRegiao(regiao.id);
+const i = lugares.findIndex((l) => l.id === lugar.id);
+const d = lugar.data;
+---
+<Base titulo={`${d.lugar}, ${d.livro}`} descricao={`${d.livro}, de ${d.autor} (${d.ano}). ${d.onde}.`}>
+  <Topo compacto />
+  <main class="inner pad">
+    <NavRegioes atual={regiao.id} />
+    <Trilha lugares={lugares} atual={lugar.id} />
+    <div class="layout">
+      <Mapa regiao={regiao} lugares={lugares} atual={lugar} />
+      <Ficha lugar={lugar} n={i + 1} anterior={lugares[i - 1]} proximo={lugares[i + 1]} />
+    </div>
+  </main>
+</Base>

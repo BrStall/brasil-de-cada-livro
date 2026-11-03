@@ -1,0 +1,31 @@
+---
+// Fileira de casarões coloridos, gerada no build (sem JavaScript no navegador).
+import { PALETA, TINTA, BRANCO } from '../data/paleta';
+
+const cores = [PALETA.rosa, PALETA.amarelo, PALETA.turquesa, PALETA.laranja, PALETA.verde, PALETA.lilas, PALETA.vermelho, PALETA.azul, '#FF9EC4', '#7ED3C5'];
+let x = -10;
+let i = 0;
+let svg = '';
+while (x < 970) {
+  const w = 46 + ((i * 37) % 5) * 6;
+  const h = 62 + ((i * 53) % 6) * 12;
+  const c = cores[(i * 3) % cores.length];
+  const y = 140 - h;
+  svg += `<rect x="${x}" y="${y}" width="${w}" height="${h + 4}" fill="${c}" stroke="${TINTA}" stroke-width="2.5"/>`;
+  svg += `<rect x="${x - 3}" y="${y - 6}" width="${w + 6}" height="7" fill="${BRANCO}" stroke="${TINTA}" stroke-width="2"/>`;
+  const colunas = w > 58 ? 3 : 2;
+  const passo = w / (colunas + 1);
+  for (let r = 0; y + 14 + r * 26 < 118; r++) {
+    for (let k = 0; k < colunas; k++) {
+      const wx = x + passo * (k + 1) - 4;
+      const wy = y + 14 + r * 26;
+      svg += `<path d="M${wx} ${wy + 14} V${wy + 4} a4 4 0 0 1 8 0 V${wy + 14}Z" fill="${BRANCO}" stroke="${TINTA}" stroke-width="1.6"/>`;
+      svg += `<rect x="${wx + 1}" y="${wy + 5}" width="6" height="4" fill="${cores[(i + k + 2) % cores.length]}"/>`;
+    }
+  }
+  svg += `<path d="M${x + w / 2 - 6} 142 V128 a6 6 0 0 1 12 0 V142Z" fill="${TINTA}"/>`;
+  x += w;
+  i++;
+}
+---
+<svg class="casario" viewBox="0 0 960 140" preserveAspectRatio="xMidYMax slice" aria-hidden="true" set:html={svg} />

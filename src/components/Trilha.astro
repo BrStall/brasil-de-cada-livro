@@ -1,0 +1,30 @@
+---
+import type { Lugar } from '../types';
+import { hrefDoLugar } from '../lib/conteudo';
+import { PALETA, corTexto } from '../data/paleta';
+
+interface Props {
+  lugares: Lugar[];
+  atual?: string;
+}
+const { lugares, atual } = Astro.props;
+---
+<nav class="trail" aria-label="Lugares em ordem de publicação" data-trilha>
+  {lugares.map((l, i) => (
+    <a
+      class="stop"
+      href={hrefDoLugar(l)}
+      aria-current={l.id === atual ? 'page' : undefined}
+      style={`--c:${PALETA[l.data.cor]};--ct:${corTexto(l.data.cor)}`}
+    >
+      <span class="n">{i + 1}</span>
+      <span>{l.data.lugar}<small>{l.data.ano} · {l.data.livro}</small></span>
+    </a>
+  ))}
+</nav>
+<script>
+  // Mantém o lugar atual visível na trilha, que rola para o lado no celular.
+  const trilha = document.querySelector<HTMLElement>('[data-trilha]');
+  const atual = trilha?.querySelector<HTMLElement>('[aria-current="page"]');
+  if (trilha && atual) trilha.scrollLeft = atual.offsetLeft - trilha.offsetLeft - 8;
+</script>

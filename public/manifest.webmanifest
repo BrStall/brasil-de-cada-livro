@@ -1,0 +1,14 @@
+{
+  "name": "O Brasil de cada livro",
+  "short_name": "Brasil de cada livro",
+  "description": "Mapa afetivo e ilustrado de clássicos brasileiros em domínio público.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFF9F0",
+  "theme_color": "#2F6BE0",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

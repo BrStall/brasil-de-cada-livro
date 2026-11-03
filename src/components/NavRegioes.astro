@@ -1,0 +1,24 @@
+---
+import { regioesOrdenadas } from '../lib/conteudo';
+import { PALETA, corTexto } from '../data/paleta';
+
+interface Props {
+  atual: string;
+  /** true quando a página é a própria página do estado (e não a de um lugar dentro dele). */
+  naPaginaDoEstado?: boolean;
+}
+const { atual, naPaginaDoEstado = false } = Astro.props;
+const regioes = await regioesOrdenadas();
+---
+<nav class="tabs" aria-label="Estados">
+  {regioes.map((r) => (
+    <a
+      class="tab"
+      href={`/${r.id}/`}
+      aria-current={r.id === atual ? (naPaginaDoEstado ? 'page' : 'true') : undefined}
+      style={`--tab-cor:${PALETA[r.data.cor]};--tab-texto:${corTexto(r.data.cor)}`}
+    >
+      {r.data.nome}
+    </a>
+  ))}
+</nav>

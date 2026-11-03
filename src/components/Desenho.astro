@@ -1,0 +1,10 @@
+---
+import { desenho } from '../lib/desenhos';
+
+interface Props {
+  nome: string;
+  class?: string;
+}
+const { nome, class: classe } = Astro.props;
+---
+<svg class={classe} viewBox="-34 -62 68 68" aria-hidden="true" set:html={desenho(nome)} />

@@ -1,0 +1,23 @@
+---
+import Casario from './Casario.astro';
+
+interface Props {
+  compacto?: boolean;
+}
+const { compacto = false } = Astro.props;
+---
+<header class:list={['top', { compacto }]}>
+  <div class="inner pad">
+    <div class="kicker">Mapa afetivo da literatura</div>
+    {compacto ? (
+      <a class="marca" href="/">O Brasil de cada livro</a>
+    ) : (
+      <>
+        <h1>O Brasil de cada livro</h1>
+        <p class="lede">Clássicos em domínio público, desenhados no lugar onde acontecem. Escolha um estado, toque num desenho do mapa e leia o trecho.</p>
+      </>
+    )}
+  </div>
+  <Casario />
+  <div class="fita" aria-hidden="true"></div>
+</header>

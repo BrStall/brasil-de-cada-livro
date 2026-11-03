@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Topo from '../components/Topo.astro';
+import Desenho from '../components/Desenho.astro';
+import { lugaresDaRegiao, regioesOrdenadas } from '../lib/conteudo';
+import { PALETA, corTexto } from '../data/paleta';
+
+const regioes = await regioesOrdenadas();
+const cards = await Promise.all(
+  regioes.map(async (r) => {
+    const lugares = await lugaresDaRegiao(r.id);
+    const anos = lugares.map((l) => l.data.ano);
+    return { r, lugares, de: anos[0], ate: anos[anos.length - 1] };
+  }),
+);
+const emBreve = [
+  { nome: 'Minas Gerais', texto: 'Vila Rica de Marília de Dirceu e o seminário de Congonhas.' },
+  { nome: 'São Paulo', texto: 'Os bairros italianos de Alcântara Machado e a Pauliceia de Mário de Andrade.' },
+  { nome: 'Ceará', texto: 'Os verdes mares de Iracema e a seca de Luzia-Homem em Sobral.' },
+];
+---
+<Base titulo="O Brasil de cada livro">
+  <Topo />
+  <main class="inner pad">
+    <p class="intro">Cada clássico brasileiro acontece num lugar de verdade: uma esquina, um morro, uma ilha, um engenho. Aqui você lê o trecho no lugar onde ele se passa, vê como era e como está hoje, e leva uma pergunta para a sala de aula.</p>
+
+    <div class="estados">
+      {cards.map(({ r, lugares, de, ate }) => (
+        <a class="estado" href={`/${r.id}/`} style={`--c:${PALETA[r.data.cor]};--ct:${corTexto(r.data.cor)}`}>
+          <div class="faixa">
+            <h2>{r.data.nome}</h2>
+            <div class="desenhos">
+              {lugares.slice(0, 3).map((l) => <Desenho nome={l.data.desenho} />)}
+            </div>
+          </div>
+          <div class="txt">
+            <p>{r.data.descricao}</p>
+            <span class="meta">{lugares.length} lugares · de {de} a {ate}</span>
+          </div>
+        </a>
+      ))}
+      {emBreve.map((e) => (
+        <div class="estado embreve" aria-label={`${e.nome}, em breve`}>
+          <div class="faixa"><h2>{e.nome}</h2><span class="meta">em breve</span></div>
+          <div class="txt"><p>{e.texto}</p></div>
+        </div>
+      ))}
+    </div>
+
+    <section class="secao">
+      <h2>Por que só domínio público?</h2>
+      <p>No Brasil, a obra de um autor fica livre 70 anos depois da morte dele, contados a partir de 1º de janeiro do ano seguinte. Por isso o mapa traz autores como Machado de Assis, Aluísio Azevedo, Lima Barreto e Euclides da Cunha: os textos podem ser lidos, copiados e levados para a escola sem custo.</p>
+    </section>
+  </main>
+</Base>

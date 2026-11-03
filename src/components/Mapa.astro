@@ -1,0 +1,65 @@
+---
+import type { DadosMapa, Lugar, Regiao } from '../types';
+import { hrefDoLugar } from '../lib/conteudo';
+import { PALETA, corTexto } from '../data/paleta';
+
+interface Props {
+  regiao: Regiao;
+  lugares: Lugar[];
+  atual?: Lugar;
+}
+const { regiao, lugares, atual } = Astro.props;
+const R = regiao.data;
+
+const vistaInicial = atual?.data.agrupamento
+  ? (R.agrupamentos.find((a) => a.id === atual.data.agrupamento)?.vista ?? R.vistaPadrao)
+  : R.vistaPadrao;
+
+const dados: DadosMapa = {
+  regiao: {
+    lat0: R.lat0,
+    chao: R.chao,
+    vistaPadrao: R.vistaPadrao,
+    vistas: R.vistas,
+    agua: R.agua,
+    ilhas: R.ilhas,
+    lagos: R.lagos,
+    rios: R.rios,
+    enfeites: R.enfeites,
+    rotulos: R.rotulos,
+    agrupamentos: R.agrupamentos.map((a) => ({ ...a, cor: PALETA[a.cor] })),
+  },
+  lugares: lugares.map((l, i) => ({
+    id: l.id,
+    href: hrefDoLugar(l),
+    n: i + 1,
+    lugar: l.data.lugar,
+    livro: l.data.livro,
+    cor: PALETA[l.data.cor],
+    corTexto: corTexto(l.data.cor),
+    desenho: l.data.desenho,
+    lon: l.data.coordenadas.lon,
+    lat: l.data.coordenadas.lat,
+    agrupamento: l.data.agrupamento,
+    aproximado: l.data.aproximado,
+  })),
+  atual: atual?.id ?? null,
+  vista: vistaInicial,
+};
+// Escapa o sinal de menor para nenhum texto encerrar a tag de dados antes da hora.
+const json = JSON.stringify(dados).replace(/</g, '\\u003c');
+---
+<section class="mapbox" id="mapa" aria-label={`Mapa ilustrado: ${R.nome}`} data-mapa>
+  <div class="mapbar">
+    <div class="chips" data-chips></div>
+    <div class="hint">Desenho ilustrativo, fora de escala</div>
+  </div>
+  <svg class="mapa" role="img" aria-label={`Mapa ilustrado com os lugares dos livros: ${R.nome}`}></svg>
+  <noscript><p class="semjs">O mapa precisa de JavaScript. Use a trilha de lugares acima para navegar.</p></noscript>
+</section>
+<script is:inline type="application/json" id="mapa-dados" set:html={json}></script>
+<script>
+  import { iniciarMapa, rolarParaFichaSePreciso } from '../scripts/mapa';
+  iniciarMapa();
+  rolarParaFichaSePreciso();
+</script>

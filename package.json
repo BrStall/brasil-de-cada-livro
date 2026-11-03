@@ -1,0 +1,24 @@
+{
+  "name": "brasil-de-cada-livro",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Mapa afetivo e ilustrado de clássicos brasileiros em domínio público.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.10.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/node": "^22.20.5",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.3.0"
+  }
+}

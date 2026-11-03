@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import Topo from '../../components/Topo.astro';
+import NavRegioes from '../../components/NavRegioes.astro';
+import Trilha from '../../components/Trilha.astro';
+import Mapa from '../../components/Mapa.astro';
+import { lugaresDaRegiao, regioesOrdenadas, hrefDoLugar } from '../../lib/conteudo';
+import { PALETA, corTexto } from '../../data/paleta';
+import type { Regiao } from '../../types';
+
+export async function getStaticPaths() {
+  const regioes = await regioesOrdenadas();
+  return regioes.map((regiao) => ({ params: { regiao: regiao.id }, props: { regiao } }));
+}
+
+interface Props { regiao: Regiao }
+const { regiao } = Astro.props;
+const lugares = await lugaresDaRegiao(regiao.id);
+const primeiro = lugares[0];
+const R = regiao.data;
+---
+<Base titulo={R.nome} descricao={`${R.descricao} ${lugares.length} lugares de clássicos em domínio público.`}>
+  <Topo compacto />
+  <main class="inner pad">
+    <NavRegioes atual={regiao.id} naPaginaDoEstado />
+    <Trilha lugares={lugares} />
+    <div class="layout">
+      <Mapa regiao={regiao} lugares={lugares} />
+      <article class="sheet" id="ficha" style={`--c:${PALETA[R.cor]};--ct:${corTexto(R.cor)}`}>
+        <div class="head">
+          <div>
+            <div class="num">{lugares.length} lugares · de {lugares[0]?.data.ano} a {lugares[lugares.length - 1]?.data.ano}</div>
+            <h1>{R.nome}</h1>
+          </div>
+        </div>
+        <div class="body">
+          <p class="intro">{R.descricao}</p>
+          <p>Toque num desenho do mapa ou escolha um lugar na trilha. Os números seguem a ordem em que as obras foram escritas ou publicadas.</p>
+          {primeiro && (
+            <div class="links">
+              <a class="btn main" href={hrefDoLugar(primeiro)}>Começar por {primeiro.data.lugar} →</a>
+            </div>
+          )}
+        </div>
+      </article>
+    </div>
+  </main>
+</Base>

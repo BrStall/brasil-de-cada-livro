@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  titulo: string;
+  descricao?: string;
+}
+
+const NOME = 'O Brasil de cada livro';
+const { titulo, descricao = 'Mapa afetivo e ilustrado de clássicos brasileiros em domínio público, no lugar onde acontecem.' } = Astro.props;
+const tituloCompleto = titulo === NOME ? NOME : `${titulo} · ${NOME}`;
+const canonico = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descricao} />
+    {canonico && <link rel="canonical" href={canonico} />}
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    {canonico && <meta property="og:url" content={canonico} />}
+    <meta name="theme-color" content="#2F6BE0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Nunito+Sans:opsz,wght@6..12,500;6..12,700;6..12,800&display=swap" />
+  </head>
+  <body>
+    <slot />
+    <footer class="inner pad">
+      Textos de autores mortos há mais de 70 anos (Lei 9.610/98, art. 41), em ortografia atualizada, conferidos em edições digitais públicas como a Biblioteca Brasiliana Guita e José Mindlin (USP). Mapas ilustrativos, fora de escala.
+    </footer>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
+  </body>
+</html>

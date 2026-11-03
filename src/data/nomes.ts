@@ -1,0 +1,12 @@
+// Nomes válidos de desenhos e enfeites. Cada nome corresponde a um arquivo .svg
+// em src/assets/desenhos ou src/assets/enfeites. Ao criar um desenho novo,
+// adicione o arquivo e o nome aqui.
+export const DESENHOS = [
+  'casario', 'cortico', 'engenho', 'esquina', 'estatua', 'igreja',
+  'ilha', 'morro', 'relogio', 'sertao', 'sobrado', 'trem',
+] as const;
+
+export const ENFEITES = ['barco', 'cacto', 'farol', 'pao', 'sol'] as const;
+
+export type NomeDesenho = (typeof DESENHOS)[number];
+export type NomeEnfeite = (typeof ENFEITES)[number];
