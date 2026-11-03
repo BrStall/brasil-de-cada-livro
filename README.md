@@ -24,6 +24,7 @@ src/
     lugares/
       rio/          um .md por lugar (o nome do arquivo vira o endereço: /rio/canto-dos-meirinhos/)
       bahia/
+      parana/
   content.config.ts regras do conteúdo: se faltar um campo, o build avisa
   assets/
     desenhos/       um .svg por desenho de lugar (casario, trem, igreja...)

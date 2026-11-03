@@ -9,7 +9,8 @@ Projeto pessoal da Bruna, ligado à pós-graduação em tecnologias para educaç
 - Astro 5 + TypeScript, site estático. JavaScript no navegador só no mapa (`src/scripts/mapa.ts`) e no service worker.
 - Conteúdo em content collections: `src/content/lugares/<estado>/*.md` (frontmatter validado) e `src/content/regioes/<estado>.json` (geometria do mapa). Schema em `src/content.config.ts`.
 - `npm run dev` · `npm run check` · `npm run build`
-- Deploy planejado: GitHub → Vercel (domínio próprio da Bruna já está na Vercel). Variável `SITE_URL` com o endereço final.
+- Publicado: GitHub (`BrStall/brasil-de-cada-livro`) → Vercel. Cada push na `main` publica. `SITE_URL` aceita endereço sem `https://`; sem ela, usa o domínio da Vercel.
+- O remoto usa `https://BrStall@github.com/...` porque o Windows também guarda o login de outra conta do GitHub.
 - Detalhes de estrutura, como adicionar lugar/estado e convenção dos desenhos: ver `README.md`.
 
 ## Decisões de design (manter)
@@ -35,6 +36,8 @@ Projeto pessoal da Bruna, ligado à pós-graduação em tecnologias para educaç
 
 - Rio de Janeiro (8 lugares): Paquetá (A Moreninha), Canto dos Meirinhos (Memórias de um Sargento de Milícias), Outeiro da Glória (Lucíola), Botafogo (O Cortiço), Rua de Mata-cavalos e Engenho Novo (Dom Casmurro), Morro do Castelo (Esaú e Jacó), Rua São Januário (Policarpo Quaresma).
 - Bahia (4 lugares): engenho do Recôncavo (Sermão XIV do Rosário, Vieira), Centro Histórico (Gregório de Matos, "Triste Bahia"), Praça Castro Alves (Ode ao Dous de Julho), Canudos (Os Sertões).
+- Paraná (3 lugares, mapa só do litoral ao planalto): Porto de Paranaguá e Estrada de ferro da Serra do Mar (Através do Brasil, Bilac e Bomfim, cap. LXXII, conferido no fac-símile de 1923 do Wikisource), Rio Iguaçu (soneto "Iguassú", Ilusão, Emiliano Perneta, conferido na reedição virtual de 2011 da Academia Paranaense de Letras, feita a partir da edição de 1911).
+  - Candidatos ainda sem fonte digital encontrada: Nestor Vítor, A Terra do Futuro (1913, Curitiba); Silveira Neto, Do Guairá aos Saltos do Iguaçu (1914, Sete Quedas); Passeio Público de Curitiba (lançamento de Ilusão, "Ilha da Ilusão").
 - Páginas: início (estados + "em breve"), página do estado, página de cada lugar (`/rio/canto-dos-meirinhos/`), 404.
 - PWA simples: `public/manifest.webmanifest` e `public/sw.js` (páginas visitadas funcionam offline).
 - `prototipo/index.html` é a versão de arquivo único anterior, só para referência.
@@ -47,8 +50,8 @@ Projeto pessoal da Bruna, ligado à pós-graduação em tecnologias para educaç
 
 ## Próximos passos combinados
 
-1. Publicar: repositório no GitHub, importar na Vercel, `SITE_URL`, domínio.
-2. Novos estados, nesta ordem:
+1. ~~Publicar~~ (feito).
+2. Novos estados, nesta ordem (Paraná entrou antes, a pedido):
    - **Minas Gerais**: Marília de Dirceu (Tomás Antônio Gonzaga, Vila Rica/Ouro Preto); O Seminarista (Bernardo Guimarães, seminário de Congonhas).
    - **São Paulo**: Brás, Bexiga e Barra Funda (Alcântara Machado); Pauliceia Desvairada (Mário de Andrade); Oswald de Andrade; Urupês (Monteiro Lobato, Vale do Paraíba).
    - **Ceará**: Iracema (José de Alencar, Messejana/Fortaleza); Luzia-Homem (Domingos Olímpio, Sobral, seca de 1877).
