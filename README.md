@@ -31,9 +31,11 @@ src/
     enfeites/       desenhos decorativos do mapa (barco, cacto, sol...)
   components/       Topo, Trilha, Mapa, Ficha...
   pages/            início, página do estado e página de cada lugar
-  scripts/mapa.ts   mapa interativo (zoom, desenhos, agrupamentos)
-  data/             paleta de cores e nomes dos desenhos
+  scripts/mapa.ts   mapa interativo dos estados (vistas, desenhos, agrupamentos)
+  scripts/mapa-brasil.ts  zoom do mapa do Brasil na página inicial
+  data/             paleta de cores, nomes dos desenhos e brasil.json (contorno dos estados)
 public/             favicon, manifest e service worker (leitura sem internet)
+scripts/            gerar-brasil.mjs: refaz src/data/brasil.json (contorno dos estados, IBGE)
 ```
 
 ## Adicionar um lugar
@@ -55,6 +57,8 @@ Use só autores mortos até 70 anos antes do ano atual (Lei 9.610/98, art. 41) e
 ## Adicionar um estado
 
 1. Crie `src/content/regioes/<estado>.json` a partir de um existente. As coordenadas são `[longitude, latitude]`.
+   - `uf`: a sigla do estado (ex.: `MG`). Liga o estado ao mapa do Brasil da página inicial.
+   - `placa` (opcional): onde fica a plaquinha no mapa do Brasil, `{ "lon": ..., "lat": ... }`. Para estado pequeno, ponha no mar: uma linha liga a plaquinha ao estado.
    - `vistas`: a primeira é a vista ampla; as outras são zooms (ex.: centro da cidade). `caixa` é `[oeste, sul, leste, norte]`.
    - `agua`: contorno do mar ou da baía. Os pontos são suavizados num traço de desenho.
 2. Crie a pasta `src/content/lugares/<estado>/` com os lugares.

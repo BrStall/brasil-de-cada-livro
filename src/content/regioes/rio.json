@@ -1,5 +1,7 @@
 {
   "nome": "Rio de Janeiro",
+  "uf": "RJ",
+  "placa": { "lon": -36.2, "lat": -22.6 },
   "ordem": 1,
   "cor": "rosa",
   "descricao": "Do tempo do rei ao subúrbio da Central: a cidade que Machado, Alencar e Lima Barreto andaram a pé.",

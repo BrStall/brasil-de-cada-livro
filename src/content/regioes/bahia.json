@@ -1,5 +1,7 @@
 {
   "nome": "Bahia",
+  "uf": "BA",
+  "placa": { "lon": -35.6, "lat": -13.4 },
   "ordem": 2,
   "cor": "amarelo",
   "descricao": "Do engenho do Recôncavo ao sertão de Canudos, passando pelo casario de Salvador.",

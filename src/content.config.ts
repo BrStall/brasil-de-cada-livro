@@ -11,6 +11,10 @@ const regioes = defineCollection({
   schema: z
     .object({
       nome: z.string(),
+      uf: z.string().regex(/^[A-Z]{2}$/), // sigla do estado, liga ao mapa do Brasil da página inicial
+      // Onde fica a plaquinha no mapa do Brasil. Sem isso, ela fica no meio do estado.
+      // Para estado pequeno, ponha no mar: uma linha liga a plaquinha ao estado.
+      placa: z.object({ lon: z.number(), lat: z.number() }).optional(),
       ordem: z.number().int(),
       cor: z.enum(CORES),
       descricao: z.string(),

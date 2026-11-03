@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Topo from '../components/Topo.astro';
 import Desenho from '../components/Desenho.astro';
+import MapaBrasil from '../components/MapaBrasil.astro';
 import { lugaresDaRegiao, regioesOrdenadas } from '../lib/conteudo';
 import { PALETA, corTexto } from '../data/paleta';
 
@@ -14,15 +15,25 @@ const cards = await Promise.all(
   }),
 );
 const emBreve = [
-  { nome: 'Minas Gerais', texto: 'Vila Rica de Marília de Dirceu e o seminário de Congonhas.' },
-  { nome: 'São Paulo', texto: 'Os bairros italianos de Alcântara Machado e a Pauliceia de Mário de Andrade.' },
-  { nome: 'Ceará', texto: 'Os verdes mares de Iracema e a seca de Luzia-Homem em Sobral.' },
+  { nome: 'Minas Gerais', uf: 'MG', texto: 'Vila Rica de Marília de Dirceu e o seminário de Congonhas.' },
+  { nome: 'São Paulo', uf: 'SP', texto: 'Os bairros italianos de Alcântara Machado e a Pauliceia de Mário de Andrade.' },
+  { nome: 'Ceará', uf: 'CE', texto: 'Os verdes mares de Iracema e a seca de Luzia-Homem em Sobral.' },
 ];
+const noMapa = cards.map(({ r, lugares }) => ({
+  uf: r.data.uf,
+  nome: r.data.nome,
+  href: `/${r.id}/`,
+  cor: r.data.cor,
+  lugares: lugares.length,
+  placa: r.data.placa,
+}));
 ---
 <Base titulo="O Brasil de cada livro">
   <Topo />
   <main class="inner pad">
     <p class="intro">Cada clássico brasileiro acontece num lugar de verdade: uma esquina, um morro, uma ilha, um engenho. Aqui você lê o trecho no lugar onde ele se passa, vê como era e como está hoje, e leva uma pergunta para a sala de aula.</p>
+
+    <MapaBrasil estados={noMapa} emBreve={emBreve.map((e) => e.uf)} />
 
     <div class="estados">
       {cards.map(({ r, lugares, de, ate }) => (

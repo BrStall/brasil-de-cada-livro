@@ -1,5 +1,7 @@
 {
   "nome": "Paraná",
+  "uf": "PR",
+  "placa": { "lon": -44.6, "lat": -30.8 },
   "ordem": 3,
   "cor": "verde",
   "descricao": "Do porto de Paranaguá ao planalto de Curitiba, subindo a serra de trem entre os pinheiros.",

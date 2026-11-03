@@ -6,7 +6,7 @@ Projeto pessoal da Bruna, ligado à pós-graduação em tecnologias para educaç
 
 ## Stack e comandos
 
-- Astro 5 + TypeScript, site estático. JavaScript no navegador só no mapa (`src/scripts/mapa.ts`) e no service worker.
+- Astro 5 + TypeScript, site estático. JavaScript no navegador só nos mapas (`src/scripts/mapa.ts` nos estados, `src/scripts/mapa-brasil.ts` no zoom do início) e no service worker.
 - Conteúdo em content collections: `src/content/lugares/<estado>/*.md` (frontmatter validado) e `src/content/regioes/<estado>.json` (geometria do mapa). Schema em `src/content.config.ts`.
 - `npm run dev` · `npm run check` · `npm run build`
 - Publicado: GitHub (`BrStall/brasil-de-cada-livro`) → Vercel. Cada push na `main` publica. `SITE_URL` aceita endereço sem `https://`; sem ela, usa o domínio da Vercel.
@@ -21,7 +21,8 @@ Projeto pessoal da Bruna, ligado à pós-graduação em tecnologias para educaç
 - Estilo "desenho": contornos grossos escuros, sombras sólidas deslocadas (box-shadow 4–6px), cantos arredondados, topo com fileira de casarões e faixa tipo fitinha do Bonfim.
 - No mapa, os lugares são **ilustrações** (casinhas, igreja, trem, mandacaru…), não pinos. Cada desenho conta algo do livro (ex.: relógio marcando 4h15 para o Major Quaresma; Morro do Castelo tracejado porque foi demolido; igreja afundada no açude em Canudos).
 - Desenhos são SVGs em `src/assets/desenhos/` com `viewBox="-34 -62 68 68"` e o pé em `0,0`. Nomes válidos em `src/data/nomes.ts`.
-- Mapas são **ilustrativos e fora de escala**: contornos de costa feitos à mão a partir de coordenadas aproximadas, suavizados (Catmull-Rom). Não há dados geográficos reais. Pontos muito próximos ficam num "agrupamento" com vista ampliada (ex.: Centro do Rio, Centro de Salvador).
+- Mapas dos estados são **ilustrativos e fora de escala**: contornos de costa feitos à mão a partir de coordenadas aproximadas, suavizados (Catmull-Rom).
+- Exceção: o mapa do Brasil da página inicial usa o contorno real dos estados (malha do IBGE, simplificada com mapshaper) em `src/data/brasil.json`, gerado por `node scripts/gerar-brasil.mjs`. Estados com conteúdo aparecem pintados com a cor da região e ganham uma plaquinha (link) que mantém o tamanho no zoom; estados pequenos têm a plaquinha no mar, ligada por uma linha (campo `placa` no JSON da região). Os estados “em breve” aparecem listrados. Pontos muito próximos ficam num "agrupamento" com vista ampliada (ex.: Centro do Rio, Centro de Salvador).
 - Numeração dos lugares = ordem cronológica de escrita/publicação dentro do estado (campo `ordem`).
 - Textos da interface em português, diretos, sem jargão.
 
@@ -38,7 +39,7 @@ Projeto pessoal da Bruna, ligado à pós-graduação em tecnologias para educaç
 - Bahia (4 lugares): engenho do Recôncavo (Sermão XIV do Rosário, Vieira), Centro Histórico (Gregório de Matos, "Triste Bahia"), Praça Castro Alves (Ode ao Dous de Julho), Canudos (Os Sertões).
 - Paraná (3 lugares, mapa só do litoral ao planalto): Porto de Paranaguá e Estrada de ferro da Serra do Mar (Através do Brasil, Bilac e Bomfim, cap. LXXII, conferido no fac-símile de 1923 do Wikisource), Rio Iguaçu (soneto "Iguassú", Ilusão, Emiliano Perneta, conferido na reedição virtual de 2011 da Academia Paranaense de Letras, feita a partir da edição de 1911).
   - Candidatos ainda sem fonte digital encontrada: Nestor Vítor, A Terra do Futuro (1913, Curitiba); Silveira Neto, Do Guairá aos Saltos do Iguaçu (1914, Sete Quedas); Passeio Público de Curitiba (lançamento de Ilusão, "Ilha da Ilusão").
-- Páginas: início (estados + "em breve"), página do estado, página de cada lugar (`/rio/canto-dos-meirinhos/`), 404.
+- Páginas: início (mapa do Brasil com zoom + cards dos estados e "em breve"), página do estado, página de cada lugar (`/rio/canto-dos-meirinhos/`), 404.
 - PWA simples: `public/manifest.webmanifest` e `public/sw.js` (páginas visitadas funcionam offline).
 - `prototipo/index.html` é a versão de arquivo único anterior, só para referência.
 
@@ -56,5 +57,4 @@ Projeto pessoal da Bruna, ligado à pós-graduação em tecnologias para educaç
    - **São Paulo**: Brás, Bexiga e Barra Funda (Alcântara Machado); Pauliceia Desvairada (Mário de Andrade); Oswald de Andrade; Urupês (Monteiro Lobato, Vale do Paraíba).
    - **Ceará**: Iracema (José de Alencar, Messejana/Fortaleza); Luzia-Homem (Domingos Olímpio, Sobral, seca de 1877).
    - Outras candidatas: Pernambuco (Minha Formação, Nabuco, engenho Massangana), Paraíba (Augusto dos Anjos, tamarindo do engenho Pau d'Arco), Maranhão (O Mulato, Aluísio Azevedo; Gonçalves Dias), Rio Grande do Sul (Simões Lopes Neto, Pelotas, Negrinho do Pastoreio), Mato Grosso do Sul (Inocência, Taunay), Goiás (Tropas e Boiadas, Hugo de Carvalho Ramos), Pará (Contos Amazônicos, Inglês de Sousa, Óbidos).
-   - Com mais estados, a página inicial deve ganhar um mapa do Brasil para escolher o estado.
 3. Depois: sugestões de lugares por alunos e professores com moderação (ex.: Supabase); editor sem código (ex.: Decap CMS) sobre os mesmos `.md`; ilustrações profissionais substituindo os SVGs.

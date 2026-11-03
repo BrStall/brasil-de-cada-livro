@@ -1,0 +1,129 @@
+---
+// Mapa do Brasil da página inicial: contorno real dos estados (IBGE, simplificado), pintados
+// quando já têm livros. O SVG sai pronto do build; o script só cuida do zoom e das plaquinhas.
+import BRASIL from '../data/brasil.json';
+import { criarProjecao, type Caixa, type Ponto } from '../lib/geo';
+import { PALETA, corTexto, type Cor } from '../data/paleta';
+
+export interface EstadoNoMapa {
+  uf: string;
+  nome: string;
+  href: string;
+  cor: Cor;
+  lugares: number;
+  placa?: { lon: number; lat: number };
+}
+interface Props {
+  estados: EstadoNoMapa[];
+  emBreve: string[]; // siglas
+}
+const { estados, emBreve } = Astro.props;
+
+// A caixa vai além da costa a leste para caber as plaquinhas no mar.
+const CAIXA: Caixa = [-74.4, -34.2, -29, 5.8];
+const proj = criarProjecao(CAIXA, -15);
+const W = proj.x(CAIXA[2]);
+const H = proj.y(CAIXA[1]);
+// Unidades do SVG por pixel de tela antes do script rodar (mapa com uns 400px de largura).
+const S0 = Math.round(W / 400);
+const xy = ([lon, lat]: Ponto) => `${proj.x(lon).toFixed(1)},${proj.y(lat).toFixed(1)}`;
+const caminho = (aneis: Ponto[][]) => aneis.map((a) => `M${a.map(xy).join('L')}Z`).join('');
+
+// Centro de área do maior anel: é onde a linha da plaquinha encosta no estado.
+function centro(aneis: Ponto[][]): Ponto {
+  let melhor: Ponto = aneis[0][0], maior = 0;
+  for (const a of aneis) {
+    let area = 0, cx = 0, cy = 0;
+    for (let i = 0; i < a.length - 1; i++) {
+      const [x0, y0] = a[i], [x1, y1] = a[i + 1];
+      const c = x0 * y1 - x1 * y0;
+      area += c; cx += (x0 + x1) * c; cy += (y0 + y1) * c;
+    }
+    if (Math.abs(area) > maior) { maior = Math.abs(area); melhor = [cx / (3 * area), cy / (3 * area)]; }
+  }
+  return melhor;
+}
+
+const porUf = new Map(estados.map((e) => [e.uf, e]));
+// Estados maiores primeiro, para o DF ficar por cima de Goiás.
+const ufs = (BRASIL as { uf: string; nome: string; aneis: Ponto[][] }[])
+  .map((u) => ({ ...u, d: caminho(u.aneis), c: centro(u.aneis) }))
+  .sort((a, b) => b.d.length - a.d.length);
+
+const placas = estados.map((e) => {
+  const u = ufs.find((x) => x.uf === e.uf)!;
+  const [ax, ay] = [proj.x(u.c[0]), proj.y(u.c[1])];
+  const [px, py] = e.placa ? [proj.x(e.placa.lon), proj.y(e.placa.lat)] : [ax, ay];
+  return { ...e, ax, ay, px, py };
+});
+
+// Resto da América do Sul, só um esboço, para o Brasil não parecer uma ilha.
+// Os pontos do lado leste passam por dentro do Brasil, que é desenhado por cima.
+const VIZINHOS: Ponto[] = [
+  [-82, 13], [-71, 12.5], [-62, 10.8], [-57, 6.2], [-53, 5.6], [-51.6, 4.2], [-52.5, -1], [-45, -5],
+  [-48, -20], [-51, -27], [-53, -31], [-53.4, -33.8], [-54.9, -34.95], [-56.5, -34.8], [-58.2, -34.4],
+  [-57.4, -36.2], [-56.7, -36.6], [-57.6, -38.3], [-62, -39], [-64, -42], [-82, -42],
+];
+---
+<section class="brasil" aria-labelledby="brasil-titulo" data-brasil>
+  <div class="mapbar">
+    <h2 id="brasil-titulo" class="brasil-titulo">Escolha um estado</h2>
+  </div>
+  <div class="brasil-palco" data-palco style={`aspect-ratio:${W.toFixed(0)}/${H.toFixed(0)}`}>
+    <svg class="brasil-svg" viewBox={`0 0 ${W.toFixed(1)} ${H.toFixed(1)}`} data-largura={W} data-altura={H} aria-hidden="true">
+      <defs>
+        <pattern id="br-ondas" patternUnits="userSpaceOnUse" width="28" height="16" patternTransform={`scale(${S0})`} data-escala>
+          <path d="M3 10 q4 -5 8 0 t8 0" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" opacity="0.7" />
+        </pattern>
+        <pattern id="br-embreve" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform={`scale(${S0}) rotate(45)`} data-escala="rotate(45)">
+          <rect width="8" height="8" fill="#FFFFFF" /><rect width="3" height="8" fill="#E4DCF3" />
+        </pattern>
+      </defs>
+      <rect x="-1e5" y="-1e5" width="2e5" height="2e5" fill="#3CC3D6" />
+      <rect x="-1e5" y="-1e5" width="2e5" height="2e5" fill="url(#br-ondas)" />
+      <path d={`M${VIZINHOS.map(xy).join('L')}Z`} class="br-vizinhos" />
+      <g transform={`translate(${4 * S0} ${4 * S0})`} data-sombra>
+        {ufs.map((u) => <path d={u.d} fill="#1E1A3A" />)}
+      </g>
+      {ufs.map((u) => {
+        const e = porUf.get(u.uf);
+        if (e) {
+          return (
+            <a href={e.href} tabindex="-1" class="br-uf com">
+              <path d={u.d} fill={PALETA[e.cor]} />
+            </a>
+          );
+        }
+        return <path d={u.d} class:list={['br-uf', { embreve: emBreve.includes(u.uf) }]} />;
+      })}
+      {placas.map((p) => (
+        <g class="br-ligacao" data-ax={p.ax} data-ay={p.ay}>
+          <path d={`M${p.ax} ${p.ay}L${p.px} ${p.py}`} />
+          <circle cx={p.ax} cy={p.ay} r={5 * S0} fill={PALETA[p.cor]} />
+        </g>
+      ))}
+    </svg>
+    <div class="zoom" role="group" aria-label="Zoom do mapa">
+      <button type="button" class="chip" data-zoom="mais" aria-label="Aproximar">+</button>
+      <button type="button" class="chip" data-zoom="menos" aria-label="Afastar">−</button>
+      <button type="button" class="chip" data-zoom="tudo" aria-label="Ver o Brasil inteiro" hidden>⤢</button>
+    </div>
+    <ul class="placas">
+      {placas.map((p) => (
+        <li data-px={p.px} data-py={p.py} style={`left:${((p.px / W) * 100).toFixed(2)}%;top:${((p.py / H) * 100).toFixed(2)}%`}>
+          <a class="placa" href={p.href} style={`--c:${PALETA[p.cor]};--ct:${corTexto(p.cor)}`}>
+            <b>{p.nome}</b><small>{p.lugares} {p.lugares === 1 ? 'lugar' : 'lugares'}</small>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <p class="hint brasil-dica">
+    <span class="so-toque">Toque num estado colorido. Para aproximar, use os botões ou faça pinça com dois dedos.</span>
+    <span class="so-mouse">Clique num estado colorido. Para aproximar, use os botões ou Ctrl + roda do mouse. Com o mapa ampliado, arraste para mover.</span>
+  </p>
+</section>
+<script>
+  import { iniciarMapaBrasil } from '../scripts/mapa-brasil';
+  iniciarMapaBrasil();
+</script>
