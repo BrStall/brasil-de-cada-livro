@@ -1,0 +1,90 @@
+{
+  "nome": "São Paulo",
+  "uf": "SP",
+  "placa": { "lon": -41.2, "lat": -26.6 },
+  "ordem": 5,
+  "cor": "lilas",
+  "descricao": "Do porto do café em Santos às cidades mortas do Vale do Paraíba e ao viaduto de ferro do Anhangabaú.",
+  "lat0": -23.3,
+  "chao": "mata",
+  "vistaPadrao": "estado",
+  "vistas": {
+    "estado": {
+      "rotulo": "Da capital ao Vale do Paraíba",
+      "caixa": [-46.9, -24.15, -44.45, -22.35]
+    }
+  },
+  "agua": [
+    [-47.3, -24.7],
+    [-47.3, -24.28],
+    [-46.95, -24.18],
+    [-46.6, -24.07],
+    [-46.42, -24.0],
+    [-46.33, -23.99],
+    [-46.22, -24.0],
+    [-46.13, -23.87],
+    [-45.9, -23.78],
+    [-45.65, -23.8],
+    [-45.42, -23.81],
+    [-45.4, -23.64],
+    [-45.2, -23.56],
+    [-45.07, -23.45],
+    [-44.95, -23.38],
+    [-44.72, -23.23],
+    [-44.5, -23.03],
+    [-44.2, -23.05],
+    [-44.0, -23.1],
+    [-43.9, -24.7]
+  ],
+  "ilhas": [
+    [
+      [-45.36, -23.72],
+      [-45.27, -23.74],
+      [-45.22, -23.84],
+      [-45.28, -23.93],
+      [-45.36, -23.88],
+      [-45.39, -23.8]
+    ]
+  ],
+  "rios": [
+    [
+      [-46.18, -23.53],
+      [-46.45, -23.5],
+      [-46.64, -23.52],
+      [-46.76, -23.5],
+      [-46.95, -23.44]
+    ],
+    [
+      [-46.0, -23.36],
+      [-45.85, -23.2],
+      [-45.55, -23.03],
+      [-45.2, -22.82],
+      [-44.98, -22.66],
+      [-44.65, -22.52],
+      [-44.35, -22.46]
+    ]
+  ],
+  "enfeites": [
+    { "tipo": "serra", "lon": -46.05, "lat": -23.66, "escala": 1 },
+    { "tipo": "serra", "lon": -45.55, "lat": -23.5, "escala": 1.1 },
+    { "tipo": "serra", "lon": -45.05, "lat": -23.24, "escala": 0.9 },
+    { "tipo": "serra", "lon": -45.55, "lat": -22.6, "escala": 1 },
+    { "tipo": "serra", "lon": -44.95, "lat": -22.45, "escala": 0.9 },
+    { "tipo": "barco", "lon": -46.0, "lat": -24.05, "escala": 1 },
+    { "tipo": "barco", "lon": -44.95, "lat": -23.75, "escala": 0.9 },
+    { "tipo": "farol", "lon": -46.39, "lat": -24.02, "escala": 0.8 },
+    { "tipo": "sol", "lon": -44.65, "lat": -23.85, "escala": 1.1 }
+  ],
+  "rotulos": [
+    { "texto": "Oceano Atlântico", "lon": -45.55, "lat": -24.04, "tamanho": 13, "agua": true },
+    { "texto": "Ilhabela", "lon": -45.17, "lat": -23.98, "tamanho": 10, "agua": true },
+    { "texto": "SÃO PAULO", "lon": -46.64, "lat": -23.62, "tamanho": 12 },
+    { "texto": "SANTOS", "lon": -46.62, "lat": -23.94, "tamanho": 10 },
+    { "texto": "SERRA DO MAR", "lon": -45.8, "lat": -23.6, "tamanho": 11 },
+    { "texto": "VALE DO PARAÍBA", "lon": -45.35, "lat": -22.95, "tamanho": 11 },
+    { "texto": "SERRA DA MANTIQUEIRA", "lon": -45.75, "lat": -22.48, "tamanho": 10 },
+    { "texto": "rio Paraíba do Sul", "lon": -45.72, "lat": -23.22, "tamanho": 11, "agua": true },
+    { "texto": "rio Tietê", "lon": -46.33, "lat": -23.465, "tamanho": 11, "agua": true },
+    { "texto": "RIO DE JANEIRO (RJ)", "lon": -44.76, "lat": -22.8, "tamanho": 10 }
+  ]
+}

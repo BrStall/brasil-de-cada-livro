@@ -1,0 +1,61 @@
+{
+  "nome": "Minas Gerais",
+  "uf": "MG",
+  "placa": { "lon": -37.4, "lat": -18.2 },
+  "ordem": 4,
+  "cor": "laranja",
+  "descricao": "Do recado de Marília em Vila Rica aos profetas de Congonhas e ao fundo de uma mina de ouro.",
+  "lat0": -20.2,
+  "chao": "mata",
+  "vistaPadrao": "ouro",
+  "vistas": {
+    "ouro": {
+      "rotulo": "Região do ouro",
+      "caixa": [-44.2, -20.7, -43.25, -19.75]
+    }
+  },
+  "agua": [],
+  "rios": [
+    [
+      [-43.52, -20.33],
+      [-43.62, -20.25],
+      [-43.72, -20.17],
+      [-43.8, -20.08],
+      [-43.83, -19.99],
+      [-43.81, -19.9],
+      [-43.84, -19.76]
+    ],
+    [
+      [-43.68, -20.56],
+      [-43.8, -20.51],
+      [-43.93, -20.52],
+      [-44.12, -20.56]
+    ],
+    [
+      [-43.5, -20.39],
+      [-43.44, -20.38],
+      [-43.38, -20.37],
+      [-43.28, -20.35]
+    ]
+  ],
+  "enfeites": [
+    { "tipo": "serra", "lon": -43.47, "lat": -20.45, "escala": 1.1 },
+    { "tipo": "serra", "lon": -44.0, "lat": -19.97, "escala": 1 },
+    { "tipo": "serra", "lon": -44.08, "lat": -20.3, "escala": 0.9 },
+    { "tipo": "serra", "lon": -43.62, "lat": -20.62, "escala": 0.9 },
+    { "tipo": "serra", "lon": -43.55, "lat": -20.0, "escala": 0.8 },
+    { "tipo": "sol", "lon": -43.38, "lat": -19.86, "escala": 1.1 }
+  ],
+  "rotulos": [
+    { "texto": "OURO PRETO", "lon": -43.5, "lat": -20.42, "tamanho": 11 },
+    { "texto": "ITACOLOMI", "lon": -43.47, "lat": -20.5, "tamanho": 10 },
+    { "texto": "MARIANA", "lon": -43.37, "lat": -20.4, "tamanho": 10 },
+    { "texto": "CONGONHAS", "lon": -43.86, "lat": -20.535, "tamanho": 11 },
+    { "texto": "NOVA LIMA", "lon": -43.85, "lat": -20.02, "tamanho": 11 },
+    { "texto": "BELO HORIZONTE", "lon": -43.97, "lat": -19.86, "tamanho": 12 },
+    { "texto": "SERRA DO CURRAL", "lon": -44.03, "lat": -20.03, "tamanho": 10 },
+    { "texto": "SABARÁ", "lon": -43.74, "lat": -19.87, "tamanho": 10 },
+    { "texto": "rio das Velhas", "lon": -43.66, "lat": -20.14, "tamanho": 11, "agua": true },
+    { "texto": "rio Maranhão", "lon": -44.02, "lat": -20.585, "tamanho": 11, "agua": true }
+  ]
+}

@@ -22,7 +22,8 @@ const regioes = defineCollection({
       chao: z.enum(['mata', 'sertao']),
       vistaPadrao: z.string(),
       vistas: z.record(z.object({ rotulo: z.string(), caixa })),
-      agua: z.array(ponto).min(3),
+      // Mar ou baía. Estado sem litoral (como Minas) deixa a lista vazia.
+      agua: z.array(ponto).refine((a) => a.length === 0 || a.length >= 3, "agua precisa de pelo menos 3 pontos").default([]),
       ilhas: z.array(z.array(ponto)).default([]),
       lagos: z.array(z.array(ponto)).default([]),
       rios: z.array(z.array(ponto)).default([]),

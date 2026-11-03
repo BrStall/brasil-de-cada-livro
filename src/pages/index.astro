@@ -15,9 +15,9 @@ const cards = await Promise.all(
   }),
 );
 const emBreve = [
-  { nome: 'Minas Gerais', uf: 'MG', texto: 'Vila Rica de Marília de Dirceu e o seminário de Congonhas.' },
-  { nome: 'São Paulo', uf: 'SP', texto: 'Os bairros italianos de Alcântara Machado e a Pauliceia de Mário de Andrade.' },
-  { nome: 'Ceará', uf: 'CE', texto: 'Os verdes mares de Iracema e a seca de Luzia-Homem em Sobral.' },
+  { nome: 'Pernambuco', uf: 'PE', texto: 'O engenho Massangana de Minha Formação, de Joaquim Nabuco.' },
+  { nome: 'Maranhão', uf: 'MA', texto: 'A São Luís de O Mulato, de Aluísio Azevedo, e a terra das palmeiras de Gonçalves Dias.' },
+  { nome: 'Rio Grande do Sul', uf: 'RS', texto: 'Os contos gauchescos de Simões Lopes Neto, entre Pelotas e o pampa.' },
 ];
 const noMapa = cards.map(({ r, lugares }) => ({
   uf: r.data.uf,

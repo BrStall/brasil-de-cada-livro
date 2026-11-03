@@ -1,0 +1,102 @@
+{
+  "nome": "Ceará",
+  "uf": "CE",
+  "placa": { "lon": -36.4, "lat": -2.5 },
+  "ordem": 6,
+  "cor": "turquesa",
+  "descricao": "Dos verdes mares de Iracema, no Mucuripe e na lagoa da Porangaba, à seca de Luzia-Homem em Sobral.",
+  "lat0": -3.5,
+  "chao": "sertao",
+  "vistaPadrao": "estado",
+  "vistas": {
+    "estado": {
+      "rotulo": "Do litoral ao sertão",
+      "caixa": [-41.0, -4.4, -37.9, -2.6]
+    },
+    "fortaleza": {
+      "rotulo": "Fortaleza",
+      "caixa": [-38.64, -3.84, -38.42, -3.67]
+    }
+  },
+  "agua": [
+    [-41.4, 1.5],
+    [-41.4, -2.86],
+    [-40.85, -2.88],
+    [-40.5, -2.82],
+    [-40.0, -2.86],
+    [-39.6, -3.0],
+    [-39.25, -3.2],
+    [-38.95, -3.42],
+    [-38.72, -3.6],
+    [-38.62, -3.68],
+    [-38.585, -3.692],
+    [-38.55, -3.712],
+    [-38.52, -3.718],
+    [-38.5, -3.722],
+    [-38.485, -3.716],
+    [-38.473, -3.7],
+    [-38.466, -3.713],
+    [-38.452, -3.736],
+    [-38.43, -3.765],
+    [-38.4, -3.8],
+    [-38.2, -3.97],
+    [-37.95, -4.2],
+    [-37.7, -4.45],
+    [-37.5, -4.6],
+    [-37.0, -4.6],
+    [-37.0, 1.5]
+  ],
+  "lagos": [
+    [
+      [-38.573, -3.771],
+      [-38.562, -3.77],
+      [-38.558, -3.778],
+      [-38.566, -3.783],
+      [-38.575, -3.778]
+    ]
+  ],
+  "rios": [
+    [
+      [-40.5, -4.15],
+      [-40.38, -3.86],
+      [-40.33, -3.7],
+      [-40.25, -3.4],
+      [-40.15, -3.1],
+      [-40.1, -2.87]
+    ]
+  ],
+  "enfeites": [
+    { "tipo": "cacto", "lon": -40.0, "lat": -3.95, "escala": 1 },
+    { "tipo": "cacto", "lon": -39.45, "lat": -4.15, "escala": 1.1 },
+    { "tipo": "cacto", "lon": -40.75, "lat": -4.05, "escala": 0.9 },
+    { "tipo": "cacto", "lon": -38.95, "lat": -4.25, "escala": 0.8 },
+    { "tipo": "serra", "lon": -40.72, "lat": -3.5, "escala": 1 },
+    { "tipo": "barco", "lon": -38.95, "lat": -3.05, "escala": 1 },
+    { "tipo": "barco", "lon": -39.85, "lat": -2.72, "escala": 0.9 },
+    { "tipo": "sol", "lon": -40.75, "lat": -2.72, "escala": 1.1 },
+    { "tipo": "barco", "lon": -38.5, "lat": -3.695, "escala": 0.9, "somenteVista": "fortaleza" }
+  ],
+  "rotulos": [
+    { "texto": "Oceano Atlântico", "lon": -38.85, "lat": -2.8, "tamanho": 13, "agua": true },
+    { "texto": "SERTÃO", "lon": -39.6, "lat": -3.95, "tamanho": 16 },
+    { "texto": "MERUOCA", "lon": -40.72, "lat": -3.62, "tamanho": 10 },
+    { "texto": "SOBRAL", "lon": -40.35, "lat": -3.8, "tamanho": 11 },
+    { "texto": "rio Acaraú", "lon": -40.05, "lat": -3.25, "tamanho": 11, "agua": true },
+    { "texto": "MUCURIPE", "lon": -38.47, "lat": -3.738, "tamanho": 11, "somenteVista": "fortaleza" },
+    { "texto": "CENTRO", "lon": -38.53, "lat": -3.735, "tamanho": 11, "somenteVista": "fortaleza" },
+    { "texto": "PARANGABA", "lon": -38.567, "lat": -3.795, "tamanho": 11, "somenteVista": "fortaleza" },
+    { "texto": "Praia de Iracema", "lon": -38.52, "lat": -3.706, "tamanho": 11, "agua": true, "somenteVista": "fortaleza" }
+  ],
+  "agrupamentos": [
+    {
+      "id": "fortaleza",
+      "rotulo": "Fortaleza",
+      "lon": -38.52,
+      "lat": -3.74,
+      "vista": "fortaleza",
+      "dx": -30,
+      "dy": 48,
+      "cor": "rosa"
+    }
+  ]
+}
