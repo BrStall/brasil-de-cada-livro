@@ -10,6 +10,7 @@ interface Props {
 const { atual, naPaginaDoEstado = false } = Astro.props;
 const regioes = await regioesOrdenadas();
 ---
+<a class="voltar" href="/">← Início</a>
 <nav class="tabs" aria-label="Estados">
   {regioes.map((r) => (
     <a

@@ -50,6 +50,22 @@ const ufs = (BRASIL as { uf: string; nome: string; aneis: Ponto[][] }[])
   .map((u) => ({ ...u, d: caminho(u.aneis), c: centro(u.aneis) }))
   .sort((a, b) => b.d.length - a.d.length);
 
+// Todos os estados ganham uma cor da paleta, sem repetir entre vizinhos (que dividem pontos da
+// divisa). Os estados com livros mantêm a cor da região; os outros escolhem depois.
+const pontosDe = new Map(ufs.map((u) => [u.uf, new Set(u.aneis.flat().map((p) => p.join()))]));
+const vizinhos = (uf: string) =>
+  ufs.filter((o) => o.uf !== uf && [...pontosDe.get(o.uf)!].filter((p) => pontosDe.get(uf)!.has(p)).length > 1)
+    .map((o) => o.uf);
+const CORES = Object.keys(PALETA) as Cor[];
+const corDe = new Map<string, Cor>(estados.map((e) => [e.uf, e.cor]));
+ufs.filter((u) => !corDe.has(u.uf))
+  .sort((a, b) => vizinhos(b.uf).length - vizinhos(a.uf).length)
+  .forEach((u, i) => {
+    const usadas = new Set(vizinhos(u.uf).map((v) => corDe.get(v)));
+    const livres = CORES.filter((c) => !usadas.has(c));
+    corDe.set(u.uf, livres.length ? livres[i % livres.length] : CORES[i % CORES.length]);
+  });
+
 const placas = estados.map((e) => {
   const u = ufs.find((x) => x.uf === e.uf)!;
   const [ax, ay] = [proj.x(u.c[0]), proj.y(u.c[1])];
@@ -76,7 +92,7 @@ const VIZINHOS: Ponto[] = [
           <path d="M3 10 q4 -5 8 0 t8 0" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" opacity="0.7" />
         </pattern>
         <pattern id="br-embreve" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform={`scale(${S0}) rotate(45)`} data-escala="rotate(45)">
-          <rect width="8" height="8" fill="#FFFFFF" /><rect width="3" height="8" fill="#E4DCF3" />
+          <rect width="3.5" height="8" fill="#FFFFFF" opacity="0.6" />
         </pattern>
       </defs>
       <rect x="-1e5" y="-1e5" width="2e5" height="2e5" fill="#3CC3D6" />
@@ -94,7 +110,12 @@ const VIZINHOS: Ponto[] = [
             </a>
           );
         }
-        return <path d={u.d} class:list={['br-uf', { embreve: emBreve.includes(u.uf) }]} />;
+        return (
+          <g class="br-uf">
+            <path d={u.d} fill={PALETA[corDe.get(u.uf)!]} />
+            {emBreve.includes(u.uf) && <path d={u.d} class="br-listras" />}
+          </g>
+        );
       })}
       {placas.map((p) => (
         <g class="br-ligacao" data-ax={p.ax} data-ay={p.ay}>
@@ -119,8 +140,8 @@ const VIZINHOS: Ponto[] = [
     </ul>
   </div>
   <p class="hint brasil-dica">
-    <span class="so-toque">Toque num estado colorido. Para aproximar, use os botões ou faça pinça com dois dedos.</span>
-    <span class="so-mouse">Clique num estado colorido. Para aproximar, use os botões ou Ctrl + roda do mouse. Com o mapa ampliado, arraste para mover.</span>
+    <span class="so-toque">Toque numa plaquinha ou no estado dela. Para aproximar, use os botões ou faça pinça com dois dedos.</span>
+    <span class="so-mouse">Clique numa plaquinha ou no estado dela. Para aproximar, use os botões ou Ctrl + roda do mouse. Com o mapa ampliado, arraste para mover.</span>
   </p>
 </section>
 <script>
