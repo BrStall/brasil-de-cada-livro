@@ -1,6 +1,6 @@
 // Service worker simples: guarda as páginas já visitadas para leitura sem internet.
 // Ao mudar a estratégia de cache, troque a versão abaixo.
-const CACHE = 'bdcl-v1';
+const CACHE = 'bdcl-v2';
 
 self.addEventListener('install', () => self.skipWaiting());
 
@@ -33,7 +33,13 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Arquivos (CSS, JS, fontes): cache primeiro.
+  // Só os arquivos com nome versionado pelo build (/_astro/) e as fontes podem vir direto do
+  // cache: o nome muda quando o conteúdo muda. O resto (favicon, manifest...) busca a rede primeiro.
+  const versionado = fontes || url.pathname.startsWith('/_astro/');
+  if (!versionado) {
+    event.respondWith(fetch(req).catch(() => caches.match(req)));
+    return;
+  }
   event.respondWith(
     caches.match(req).then((emCache) =>
       emCache ||
