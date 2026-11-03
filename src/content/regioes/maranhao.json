@@ -1,0 +1,106 @@
+{
+  "nome": "Maranhão",
+  "uf": "MA",
+  "placa": { "lon": -41.6, "lat": 0.3 },
+  "ordem": 8,
+  "cor": "azul",
+  "descricao": "Da terra das palmeiras de Gonçalves Dias às praças e ao porto de São Luís em O Mulato.",
+  "lat0": -3.6,
+  "chao": "mata",
+  "vistaPadrao": "estado",
+  "vistas": {
+    "estado": {
+      "rotulo": "De São Luís aos cocais",
+      "caixa": [-45.0, -5.2, -42.8, -2.2]
+    },
+    "saoluis": {
+      "rotulo": "Centro de São Luís",
+      "caixa": [-44.318, -2.542, -44.29, -2.52]
+    }
+  },
+  "agua": [
+    [-45.5, 0.5],
+    [-45.5, -1.5],
+    [-45.0, -1.75],
+    [-44.7, -2.05],
+    [-44.5, -2.3],
+    [-44.42, -2.42],
+    [-44.45, -2.6],
+    [-44.48, -2.85],
+    [-44.42, -3.0],
+    [-44.33, -2.95],
+    [-44.28, -2.82],
+    [-44.2, -2.85],
+    [-44.05, -2.88],
+    [-43.95, -2.8],
+    [-43.92, -2.6],
+    [-43.85, -2.48],
+    [-43.5, -2.42],
+    [-43.1, -2.5],
+    [-42.6, -2.65],
+    [-42.0, -2.8],
+    [-42.0, 0.5]
+  ],
+  "ilhas": [
+    [
+      [-44.36, -2.47],
+      [-44.22, -2.44],
+      [-44.05, -2.48],
+      [-44.0, -2.6],
+      [-44.03, -2.72],
+      [-44.15, -2.8],
+      [-44.27, -2.78],
+      [-44.32, -2.65],
+      [-44.312, -2.545],
+      [-44.318, -2.53],
+      [-44.33, -2.51]
+    ]
+  ],
+  "rios": [
+    [
+      [-43.3, -5.1],
+      [-43.36, -4.86],
+      [-43.6, -4.5],
+      [-43.9, -4.0],
+      [-44.1, -3.5],
+      [-44.2, -3.1],
+      [-44.25, -2.93]
+    ],
+    [
+      [-44.9, -4.4],
+      [-44.7, -3.8],
+      [-44.55, -3.3],
+      [-44.47, -2.95]
+    ]
+  ],
+  "enfeites": [
+    { "tipo": "barco", "lon": -44.6, "lat": -2.4, "escala": 0.9 },
+    { "tipo": "barco", "lon": -43.4, "lat": -2.3, "escala": 1 },
+    { "tipo": "sol", "lon": -42.95, "lat": -2.35, "escala": 1.1 },
+    { "tipo": "barco", "lon": -44.316, "lat": -2.523, "escala": 0.9, "somenteVista": "saoluis" }
+  ],
+  "rotulos": [
+    { "texto": "Oceano Atlântico", "lon": -43.7, "lat": -2.25, "tamanho": 13, "agua": true },
+    { "texto": "Baía de São Marcos", "lon": -44.58, "lat": -2.68, "tamanho": 10, "agua": true },
+    { "texto": "SÃO LUÍS", "lon": -44.15, "lat": -2.62, "tamanho": 11 },
+    { "texto": "ALCÂNTARA", "lon": -44.6, "lat": -2.3, "tamanho": 10 },
+    { "texto": "CAXIAS", "lon": -43.36, "lat": -4.96, "tamanho": 11 },
+    { "texto": "MATA DOS COCAIS", "lon": -43.95, "lat": -4.55, "tamanho": 12 },
+    { "texto": "rio Itapecuru", "lon": -43.62, "lat": -4.2, "tamanho": 11, "agua": true },
+    { "texto": "rio Mearim", "lon": -44.86, "lat": -3.85, "tamanho": 11, "agua": true },
+    { "texto": "PRAIA GRANDE", "lon": -44.306, "lat": -2.5315, "tamanho": 11, "somenteVista": "saoluis" },
+    { "texto": "rio Bacanga", "lon": -44.314, "lat": -2.538, "tamanho": 11, "agua": true, "somenteVista": "saoluis" }
+  ],
+  "agrupamentos": [
+    {
+      "id": "saoluis",
+      "rotulo": "São Luís",
+      "lon": -44.3,
+      "lat": -2.53,
+      "vista": "saoluis",
+      "dx": 60,
+      "dy": 36,
+      "cor": "amarelo"
+    }
+  ]
+}

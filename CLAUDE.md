@@ -44,6 +44,9 @@ Projeto pessoal da Bruna, ligado à pós-graduação em tecnologias para educaç
 - São Paulo (3): Porto de Santos (Através do Brasil, cap. LXXI), Areias (Cidades Mortas, Lobato, 3ª ed. 1921; a cidade não é nomeada no texto), Vale do Anhangabaú (poema “Anhangabahu”, Pau Brasil, Oswald, 1ª ed. 1925).
   - Pauliceia Desvairada (Mário de Andrade) ficou de fora: o único fac-símile achado é a edição crítica de 1987; falta achar a edição de 1922.
 - Ceará (3): Mucuripe e Lagoa da Porangaba (Iracema, 1ª ed. 1865, agrupamento “fortaleza”), cadeia de Sobral (Luzia-Homem, 1ª ed. 1903).
+- Pernambuco (3): Ponte do Recife (O Cabeleira, 1ª ed. 1876), Engenho Massangana (Minha Formação, 1ª ed. 1900), Garanhuns (Através do Brasil, cap. IV).
+- Maranhão (3): Caxias (Canção do Exílio, Primeiros Cantos, 1ª ed. 1846), Praça da Alegria e Praia Grande (O Mulato, transcritos do fac-símile da 1ª ed. 1881, que difere das edições seguintes; agrupamento “saoluis”).
+- Rio Grande do Sul (3): Barra do Rio Grande (Através do Brasil, cap. LXXIX), Alegrete (Duelo de Farrapos, Contos Gauchescos, 1ª ed. 1912), Cerro do Jarau (A Salamanca do Jarau, Lendas do Sul, 1ª ed. 1913).
 - Regiões sem litoral deixam `agua` vazio (ex.: minas.json).
 - Páginas: início (mapa do Brasil com zoom + cards dos estados e "em breve"), página do estado, página de cada lugar (`/rio/canto-dos-meirinhos/`), 404.
 - PWA simples: `public/manifest.webmanifest` e `public/sw.js` (páginas visitadas funcionam offline).
@@ -59,6 +62,6 @@ Projeto pessoal da Bruna, ligado à pós-graduação em tecnologias para educaç
 
 1. ~~Publicar~~ (feito).
 2. Novos estados, nesta ordem (Paraná entrou antes, a pedido):
-   - ~~Minas Gerais, São Paulo, Ceará~~ (feitos). Próximo lote: Pernambuco, Maranhão, Rio Grande do Sul (já aparecem como “em breve”).
+   - ~~Minas Gerais, São Paulo, Ceará~~ (feitos). Pernambuco, Maranhão e Rio Grande do Sul também (2º lote). Próximo lote: Paraíba, Pará, Mato Grosso do Sul (já aparecem como “em breve”).
    - Outras candidatas: Pernambuco (Minha Formação, Nabuco, engenho Massangana), Paraíba (Augusto dos Anjos, tamarindo do engenho Pau d'Arco), Maranhão (O Mulato, Aluísio Azevedo; Gonçalves Dias), Rio Grande do Sul (Simões Lopes Neto, Pelotas, Negrinho do Pastoreio), Mato Grosso do Sul (Inocência, Taunay), Goiás (Tropas e Boiadas, Hugo de Carvalho Ramos), Pará (Contos Amazônicos, Inglês de Sousa, Óbidos).
 3. Depois: sugestões de lugares por alunos e professores com moderação (ex.: Supabase); editor sem código (ex.: Decap CMS) sobre os mesmos `.md`; ilustrações profissionais substituindo os SVGs.

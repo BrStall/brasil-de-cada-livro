@@ -15,9 +15,9 @@ const cards = await Promise.all(
   }),
 );
 const emBreve = [
-  { nome: 'Pernambuco', uf: 'PE', texto: 'O engenho Massangana de Minha Formação, de Joaquim Nabuco.' },
-  { nome: 'Maranhão', uf: 'MA', texto: 'A São Luís de O Mulato, de Aluísio Azevedo, e a terra das palmeiras de Gonçalves Dias.' },
-  { nome: 'Rio Grande do Sul', uf: 'RS', texto: 'Os contos gauchescos de Simões Lopes Neto, entre Pelotas e o pampa.' },
+  { nome: 'Paraíba', uf: 'PB', texto: 'O tamarindo do engenho Pau d’Arco, nos versos de Augusto dos Anjos.' },
+  { nome: 'Pará', uf: 'PA', texto: 'Os Contos Amazônicos de Inglês de Sousa, em Óbidos e no rio Amazonas.' },
+  { nome: 'Mato Grosso do Sul', uf: 'MS', texto: 'O sertão de Inocência, romance do Visconde de Taunay.' },
 ];
 const noMapa = cards.map(({ r, lugares }) => ({
   uf: r.data.uf,
